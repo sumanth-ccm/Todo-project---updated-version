@@ -58,6 +58,7 @@ const rules = {
 };
 const v$ = useVuelidate(rules, state);
 
+//Submit form
 const submitForm = async () => {
   v$.value.$touch(); 
 
@@ -69,16 +70,14 @@ if (v$.value.$pending) {
  }
  try {
     await createtodo(state.todoTitle, todoStatus.value);
-    console.log('1')
     await deletetodo(todoId.value);
-    console.log('2')
     router.push('/');
-    console.log('3')
   } catch (error) {
     console.error('Error while creating todo:', error);
   }
 };
 
+// create a todo
 const createtodo = async (todoTitle: string, isComplete: boolean) => {
   try {
     await axios.post('https://calm-plum-jaguar-tutu.cyclic.app/todos', {
@@ -92,6 +91,7 @@ const createtodo = async (todoTitle: string, isComplete: boolean) => {
     throw error; 
   }
 };
+//delete todo
 const deletetodo =async(todoId: string) =>{
   try{
     await axios.delete(`https://calm-plum-jaguar-tutu.cyclic.app/todos/${todoId}`)
